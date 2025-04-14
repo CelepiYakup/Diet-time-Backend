@@ -4,7 +4,11 @@ services:
   postgres:
     image: postgres:13
     env_file:
-      - ../postgres.env
+      - ./.env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -24,6 +28,9 @@ services:
       - postgres
     networks:
       - backend-network
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
 
 networks:
   backend-network:
