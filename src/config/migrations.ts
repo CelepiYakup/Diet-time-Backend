@@ -91,7 +91,7 @@ export const migrateMealPlansTable = async () => {
       WHERE table_name = 'meal_plans' AND column_name = 'expiration_date'
     `);
 
-    // If expiration_date column doesn't exist, add it
+
     if (expirationColumnCheck.rows.length === 0) {
       await pool.query(`
         ALTER TABLE meal_plans

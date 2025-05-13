@@ -108,12 +108,10 @@ export class GoalModel {
 
   static async getActiveGoals(userId: number): Promise<Goal[]> {
     try {
-      // Önce status sütunuyla sorgu yapmayı dene
       const query = "SELECT * FROM goals WHERE user_id = $1 AND status = 'in progress' ORDER BY target_date ASC";
       const result = await pool.query(query, [userId]);
       return result.rows;
     } catch (error) {
-      // Status sütunu yoksa veya başka bir hata olursa deadline ile sorgu yap
       console.error('Error fetching active goals with status, falling back to deadline:', error);
       
       const fallbackQuery = 'SELECT * FROM goals WHERE user_id = $1 AND deadline > NOW() ORDER BY deadline ASC';
